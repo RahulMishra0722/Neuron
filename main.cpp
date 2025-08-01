@@ -184,7 +184,7 @@ double training_data[][5] = {
     {38, 67000, 5, 2, 0},
     {35, 59000, 6, 3, 1}};
 
-class Neuron
+class NeuronNode
 {
 private:
     double weight1, weight2, weight3, weight4, bias;
@@ -200,7 +200,7 @@ private:
     double opens_min = 0, opens_max = 16;
 
 public:
-    Neuron()
+    NeuronNode()
     {
         double xavier_range = sqrt(6.0 / 5.0);
         random_device rd;
@@ -334,7 +334,7 @@ public:
 
 int main()
 {
-    Neuron neuron;
+    NeuronNode neuron;
     int num_examples = sizeof(training_data) / sizeof(training_data[0]);
 
     for (int epoch = 0; epoch < 50; epoch++)

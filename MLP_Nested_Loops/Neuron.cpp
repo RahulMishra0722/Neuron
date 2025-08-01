@@ -64,33 +64,16 @@ vector<double> Neuron::backward_pass(double error_from_next_layer)
   vector<double> inputs_errors(input_size);
   double sigmoid_deriv = sigmoid_derivative(last_weighted_sum);
   double delta = error_from_next_layer * sigmoid_deriv;
-  static int backward_count = 0;
-  backward_count++;
-  if (backward_count % 1000 == 0 || backward_count < 5)
-  {
-    cout << "[Backward Pass " << backward_count << "]\n";
-    cout << "  Error from next layer: " << error_from_next_layer << "\n";
-    cout << "  Last output: " << last_output << "\n";
-    cout << "  Sigmoid Derivative: " << sigmoid_deriv << "\n";
-    cout << "  Delta (gradient): " << delta << "\n";
-  }
+
   for (int i = 0; i < input_size; i++)
   {
     inputs_errors[i] = delta * weights[i];
     double weight_update = step_size * delta * last_input[i];
     weights[i] -= weight_update;
-    if ((backward_count % 1000 == 0 || backward_count < 5) && i < 5)
-    {
-      cout << "Weight[" << i
-           << "] update: " << weight_update << "(new value: " << weights[i] << ")\n";
-    }
   }
   double bias_update = step_size * delta;
   bias -= bias_update;
-  if (backward_count % 1000 == 0 || backward_count < 5)
-  {
-    cout << "  Bias update: " << bias_update << " (new value: " << bias << ")\n";
-  }
+
   return inputs_errors;
 }
 
