@@ -168,6 +168,7 @@ vector<double> NeuralNetwork::backward_pass(vector<double> target)
   }
   for (int layer = layers.size() - 1; layer >= 0; layer--)
   {
+    // what this does is the next layer will fix its own erros / what it contributed to the error and will reduce its weights and do gradiant decent and now it sorta points out the errors
     errors = layers[layer].backward_pass(errors);
   }
   return errors;
@@ -196,16 +197,4 @@ double NeuralNetwork::calculateLoss(vector<double> predicted, vector<double> tar
     loss -= targets[i] * log(pred);
   }
   return loss;
-}
-
-// Alternative: Mean Squared Error loss
-double NeuralNetwork::calculateMSELoss(vector<double> predicted, vector<double> targets)
-{
-  double loss = 0.0;
-  for (int i = 0; i < predicted.size(); i++)
-  {
-    double diff = predicted[i] - targets[i];
-    loss += diff * diff;
-  }
-  return loss / predicted.size();
 }
